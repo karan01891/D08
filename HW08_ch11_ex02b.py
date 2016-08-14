@@ -13,31 +13,55 @@
 # alphabetical histogram of pledge.txt
 ###############################################################################
 # Imports
-
+import itertools
 
 # Body
-def print_hist_old(h):
-    for c in h:
-        print(c, h[c])
+def print_hist_old(counts):
+    for c in sorted(counts):
+   		print(c, counts[c])
+    
 
+def print_hist_new(pledge_list):
+    counts=dict()
+    for word in pledge_list:
+        counts[word] = counts.get(word,0) +1  
+    return(print_hist_old(counts))
 
-def print_hist_new(h):
-    pass
-
-
-###############################################################################
-# INSERT COMPLETED CODE FROM HW08_ch11_ex02a BELOW: ###########################
-###############################################################################
-
-
-###############################################################################
-# INSERT COMPLETED CODE FROM HW08_ch11_ex02a BELOW: ###########################
-###############################################################################
-def main():
-    """ Calls print_hist_new with the appropriate arguments to print the
-    histogram of pledge.txt.
+def get_pledge_list():
+    """ Opens pledge.txt and converts to a list, each item is a word in
+    the order it appears in the original file. returns the list.
     """
-    pass
+    # Your code here.
+    pledge_list = []
+    handle= open('pledge.txt')
+    for line in handle:
+        lines = line.strip().split()
+        #print (lines)
+        if len(line) > 1:
+            if lines[-1][-1] == ',' or lines[-1][-1] == '.' or lines[-1][-1] == ':' :
+                #print(lines)
+                lines[-1]= lines[-1][:-1]
+                #print(lines)
+                pledge_list.append(lines)
+                continue
+            else:
+                pledge_list.append(lines)
+                continue
+    pledge_list = list(itertools.chain.from_iterable(pledge_list))
+    return pledge_list 
+
+
+###############################################################################
+# INSERT COMPLETED CODE FROM HW08_ch11_ex02a BELOW: ###########################
+###############################################################################
+
+
+###############################################################################
+# INSERT COMPLETED CODE FROM HW08_ch11_ex02a BELOW: ###########################
+###############################################################################
+
+def main():  # DO NOT CHANGE BELOW
+	print_hist_new(get_pledge_list())
 
 if __name__ == '__main__':
     main()

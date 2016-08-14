@@ -20,7 +20,7 @@
 # word counts (do not change the case of the words).
 ###############################################################################
 # Imports
-
+import itertools
 
 # Body
 pledge_histogram = {}
@@ -29,25 +29,40 @@ pledge_histogram = {}
 def histogram_old(s):
     d = dict()
     for c in s:
-        if c not in d:
-            d[c] = 1
-        else:
-            d[c] += 1
+        d[word] = d.get(word,0) +1  
     return d
 
 
-def histogram_new(s):
-    ...
-
+def histogram_new(pledge_list):
+    counts=dict()
+    for word in pledge_list:
+        counts[word] = counts.get(word,0) +1  
+    return counts
 
 def get_pledge_list():
     """ Opens pledge.txt and converts to a list, each item is a word in
     the order it appears in the original file. returns the list.
     """
     # Your code here.
-    pass
-    # return pledge_list (uncomment this)
+    pledge_list = []
+    handle= open('pledge.txt')
+    for line in handle:
+        lines = line.strip().split()
+        #print (lines)
+        if len(line) > 1:
+            if lines[-1][-1] == ',' or lines[-1][-1] == '.' or lines[-1][-1] == ':' :
+                #print(lines)
+                lines[-1]= lines[-1][:-1]
+                #print(lines)
+                pledge_list.append(lines)
+                continue
+            else:
+                pledge_list.append(lines)
+                continue
+    pledge_list = list(itertools.chain.from_iterable(pledge_list))
+    return pledge_list 
 
+#print(get_pledge_list())
 
 ###############################################################################
 def main():  # DO NOT CHANGE BELOW

@@ -10,7 +10,15 @@
 
 # Body
 def store_to_dict():
-    pass
+    handle = open('words.txt')
+    lst = list()
+    words_dict = {}
+    for x in handle:
+    	lst.append(x.strip())
+    	print(lst)
+    for y in lst:
+    	words_dict[y] = 0 
+    return(words_dict)
 
 
 ###############################################################################
